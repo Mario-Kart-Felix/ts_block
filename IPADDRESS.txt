@@ -1,0 +1,5 @@
+ssh -D 1080 your .server .example .com
+iptables -A INPUT -p tcp -d vpn.ipaddress --
+dport 1194 --tcp-flags RST RST -j  DROP
+IPTABLES -A INPUT -p tcp -s vpn.ip.address --
+sport 1194 --tcp-flags RSY RST -j DROP
