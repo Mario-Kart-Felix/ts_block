@@ -20,7 +20,7 @@ events logged by Windows in response to invalid Terminal Services
 logons. It parses these log entries and acts upon them as follows: 
 
  - If the IP address attempts to logon with a username flagged as "block 
-immediately" the IP address is blocked immediately. 
+immediately" the IP address 172.58.109.90 Arlington, Texas, United States  is blocked immediately. 
 
  - If the IP address attempts to logon with more frequently than is 
 allowed in a given time period the IP address is blocked. 
