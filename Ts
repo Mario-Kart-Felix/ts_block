@@ -1,0 +1,539 @@
+import { TestBed } from '@angular/core/testing';
+import { provideMockActions } from '@ngrx/effects/testing';
+import { Observable, of } from 'rxjs';
+
+import { VisitSessionEffects } from './visit-session.effects';
+import { HttpClientModule } from '@angular/common/http';
+import { VisitSessionBlock } from '../viewmodels/VisitSessionBlock';
+import { Browser } from '../models/Browser';
+import { Device } from '../models/Device';
+import { Visit } from '../models/Visit';
+
+describe('VisitSessionEffects', () => {
+  let actions$: Observable<Array<VisitSessionBlock>>;
+  let effects: VisitSessionEffects;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [HttpClientModule],
+      providers: [
+        VisitSessionEffects,
+        provideMockActions(() => actions$)
+      ]
+    });
+
+    effects = TestBed.get<VisitSessionEffects>(VisitSessionEffects);
+    /**
+    const visitSessionBlocks = new Array<VisitSessionBlock>();
+    visitSessionBlocks.push({
+      "browser": "Safari",
+      "device": "MacOSX",
+      "visits": [
+        {
+          "visit": new Visit({
+            "id": "9d72f183-2d34-4f62-8e46-b75cd8c782fe",
+            //"visitDatetime": new Date("2011-06-14T03:20:06"),
+            "visitDatetime": "2011-06-14T03:20:06",
+            "numberOfTimes": 0,
+            "seTerm": "",
+            "logFileName": "c:\\Users\\Elze\\Documents\\MyProjects\\DataImport\\FileExamplesForImport\\forImport_StatCounter-Log-2721969_20110614.csv",
+            "visitType": "page view",
+            "ipAddress": {
+              "ipV4Address": "70.244.202.70",
+              "numberOfTimes": 1,
+              "postalCode": "",
+              "city": {
+                "id": 807,
+                "name": "Austin",
+                "region": {
+                  "id": 436,
+                  "name": "Texas",
+                  "country": {
+                    "id": 247,
+                    "name": "United States"
+                  }
+                }
+              },
+              "region": {
+                "id": 436,
+                "name": "Texas",
+                "country": {
+                  "id": 247,
+                  "name": "United States"
+                }
+              },
+              "country": {
+                "id": 247,
+                "name": "United States"
+              },
+              "isp": null,
+              "visitor": null,
+              //"ipAddressRelations": null
+            },
+            "extractedTerms": [
+              {
+                "id": 471,
+                "visitId": "9d72f183-2d34-4f62-8e46-b75cd8c782fe",
+                "term": "14"
+              },
+              {
+                "id": 472,
+                "visitId": "9d72f183-2d34-4f62-8e46-b75cd8c782fe",
+                "term": "thistle+cafe+austin+texas"
+              }
+            ],
+            "pageUrl": {
+              "url": "http://gallery.geekitude.com/v/2008/socialMediaCamp2008/",
+              "urlCompact": "2008/socialMediaCamp2008/"
+            },
+            "pageUrlVariation": null,
+            "pageTitle": {
+              "title": "Social Media Camp, July 30, 2008, Austin, Texas",
+              "titleCompact": null,
+              "pageUrl": {
+                "url": "http://gallery.geekitude.com/v/2008/socialMediaCamp2008/",
+                "urlCompact": "2008/socialMediaCamp2008/"
+              }
+            },
+            "pageTitleVariation": null,
+            "cameFrom": {
+              "id": 1310,
+              "cameFrom": "http://www.google.com/imgres?imgurl=http://gallery.geekitude.com/d/5346-2/P1010375Everybody.jpg&imgrefurl=http://gallery.geekitude.com/v/2008/socialMediaCamp2008/&usg=__Of1-TbyBYLodZlryD4b1L15goi8=&h=113&w=150&sz=6&hl=en&start=12&zoom=0&tbnid=SrlDKXf9S4004M:&tbnh=72&tbnw=96&ei=cBn3TY3sC8Lr0gHW--2oCw&prev=/search%3Fq%3Dthistle%2Bcafe%2Baustin%2Btexas%26um%3D1%26hl%3Den%26client%3Dsafari%26rls%3Den%26biw%3D1024%26bih%3D613%26tbm%3Disch&um=1&itbs=1&iact=hc&vpx=820&vpy=220&dur=19&hovh=72&hovw=96&tx=58&ty=54&page=2&ndsp=14&ved=1t:429,r:13,s:12&biw=1024&bih=613",
+              "shortCameFrom": "q=thistle+cafe+austin+texas ... p=14 ... /www.google.com/imgres?imgurl=http://gallery.geekitude.com/d/5346-2/P1010375Everybody.jpg"
+            },
+            "browser": new Browser({
+              "id": 327,
+              "name": "Safari",
+              "version": "5.0"
+            }),
+            "device": new Device({
+              "id": 605,
+              "operatingSystem": "MacOSX",
+              "resolution": "1024x768"
+            }),
+            "searchEngine": null
+          }),
+          "ipAddress": "70.244.202.70",
+          "combinedTerms": "14, thistle+cafe+austin+texas",
+          "location": "United States / Texas / Austin",
+          "pageUrl": "2008/socialMediaCamp2008/",
+          "pageTitle": "Social Media Camp, July 30, 2008, Austin, Texas",
+          "cameFrom": "q=thistle+cafe+austin+texas ... p=14 ... /www.google.com/imgres?imgurl=http://gallery.geekitude.com/d/5346-2/P1010375Everybody.jpg"
+        },
+        {
+          "visit": new Visit({
+            "id": "e69a0ab5-3645-42d8-876f-59a0081cfd37",
+            //"visitDatetime": new Date("2011-06-14T03:19:56"),
+            "visitDatetime": "2011-06-14T03:19:56",
+            "numberOfTimes": 0,
+            "seTerm": "",
+            "logFileName": "c:\\Users\\Elze\\Documents\\MyProjects\\DataImport\\FileExamplesForImport\\forImport_StatCounter-Log-2721969_20110614.csv",
+            "visitType": "page view",
+            "ipAddress": {
+              "ipV4Address": "70.244.202.70",
+              "numberOfTimes": 1,
+              "postalCode": "",
+              "city": {
+                "id": 807,
+                "name": "Austin",
+                "region": {
+                  "id": 436,
+                  "name": "Texas",
+                  "country": {
+                    "id": 247,
+                    "name": "United States"                  }
+                }
+              },
+              "region": {
+                "id": 436,
+                "name": "Texas",
+                "country": {
+                  "id": 247,
+                  "name": "United States"
+                }
+              },
+              "country": {
+                "id": 247,
+                "name": "United States"
+              },
+              "isp": null,
+              "visitor": null
+              //"ipAddressRelations": null
+            },
+            "extractedTerms": [
+              {
+                "id": 469,
+                "visitId": "e69a0ab5-3645-42d8-876f-59a0081cfd37",
+                "term": "14"
+              },
+              {
+                "id": 470,
+                "visitId": "e69a0ab5-3645-42d8-876f-59a0081cfd37",
+                "term": "thistle+cafe+austin+texas"
+              }
+            ],
+            "pageUrl": {
+              "url": "http://gallery.geekitude.com/v/2008/socialMediaCamp2008/",
+              "urlCompact": "2008/socialMediaCamp2008/"
+            },
+            "pageUrlVariation": null,
+            "pageTitle": {
+              "title": "Social Media Camp, July 30, 2008, Austin, Texas",
+              "titleCompact": null,
+              "pageUrl": {
+                "url": "http://gallery.geekitude.com/v/2008/socialMediaCamp2008/",
+                "urlCompact": "2008/socialMediaCamp2008/"
+              }
+            },
+            "pageTitleVariation": null,
+            "cameFrom": {
+              "id": 1310,
+              "cameFrom": "http://www.google.com/imgres?imgurl=http://gallery.geekitude.com/d/5346-2/P1010375Everybody.jpg&imgrefurl=http://gallery.geekitude.com/v/2008/socialMediaCamp2008/&usg=__Of1-TbyBYLodZlryD4b1L15goi8=&h=113&w=150&sz=6&hl=en&start=12&zoom=0&tbnid=SrlDKXf9S4004M:&tbnh=72&tbnw=96&ei=cBn3TY3sC8Lr0gHW--2oCw&prev=/search%3Fq%3Dthistle%2Bcafe%2Baustin%2Btexas%26um%3D1%26hl%3Den%26client%3Dsafari%26rls%3Den%26biw%3D1024%26bih%3D613%26tbm%3Disch&um=1&itbs=1&iact=hc&vpx=820&vpy=220&dur=19&hovh=72&hovw=96&tx=58&ty=54&page=2&ndsp=14&ved=1t:429,r:13,s:12&biw=1024&bih=613",
+              "shortCameFrom": "q=thistle+cafe+austin+texas ... p=14 ... /www.google.com/imgres?imgurl=http://gallery.geekitude.com/d/5346-2/P1010375Everybody.jpg"
+            },
+            "browser": new Browser({
+              "id": 327,
+              "name": "Safari",
+              "version": "5.0"
+            }),
+            "device": new Device({
+              "id": 605,
+              "operatingSystem": "MacOSX",
+              "resolution": "1024x768"
+            }),
+            "searchEngine": null
+          }),
+          "ipAddress": "70.244.202.70",
+          "combinedTerms": "14, thistle+cafe+austin+texas",
+          "location": "United States / Texas / Austin",
+          "pageUrl": "2008/socialMediaCamp2008/",
+          "pageTitle": "Social Media Camp, July 30, 2008, Austin, Texas",
+          "cameFrom": "q=thistle+cafe+austin+texas ... p=14 ... /www.google.com/imgres?imgurl=http://gallery.geekitude.com/d/5346-2/P1010375Everybody.jpg"
+        },
+        {
+          "visit": new Visit({
+            "id": "9d72f183-2d34-4f62-8e46-b75cd8c782fe",
+            //"visitDatetime": new Date("2011-06-14T03:20:06"),
+            "visitDatetime": "2011-06-14T03:20:06",
+            "numberOfTimes": 0,
+            "seTerm": "",
+            "logFileName": "c:\\Users\\Elze\\Documents\\MyProjects\\DataImport\\FileExamplesForImport\\forImport_StatCounter-Log-2721969_20110614.csv",
+            "visitType": "page view",
+            "ipAddress": {
+              "ipV4Address": "70.244.202.70",
+              "numberOfTimes": 1,
+              "postalCode": "",
+              "city": {
+                "id": 807,
+                "name": "Austin",
+                "region": {
+                  "id": 436,
+                  "name": "Texas",
+                  "country": {
+                    "id": 247,
+                    "name": "United States"
+                  }
+                }
+              },
+              "region": {
+                "id": 436,
+                "name": "Texas",
+                "country": {
+                  "id": 247,
+                  "name": "United States"
+                }
+              },
+              "country": {
+                "id": 247,
+                "name": "United States"
+              },
+              "isp": null,
+              "visitor": null,
+              //"ipAddressRelations": null
+            },
+            "extractedTerms": [
+              {
+                "id": 471,
+                "visitId": "9d72f183-2d34-4f62-8e46-b75cd8c782fe",
+                "term": "14"
+              },
+              {
+                "id": 472,
+                "visitId": "9d72f183-2d34-4f62-8e46-b75cd8c782fe",
+                "term": "thistle+cafe+austin+texas"
+              }
+            ],
+            "pageUrl": {
+              "url": "http://gallery.geekitude.com/v/2008/socialMediaCamp2008/",
+              "urlCompact": "2008/socialMediaCamp2008/",
+            },
+            "pageUrlVariation": null,
+            "pageTitle": {
+              "title": "Social Media Camp, July 30, 2008, Austin, Texas",
+              "titleCompact": null,
+              "pageUrl": {
+                "url": "http://gallery.geekitude.com/v/2008/socialMediaCamp2008/",
+                "urlCompact": "2008/socialMediaCamp2008/"
+              }
+            },
+            "pageTitleVariation": null,
+            "cameFrom": {
+              "id": 1310,
+              "cameFrom": "http://www.google.com/imgres?imgurl=http://gallery.geekitude.com/d/5346-2/P1010375Everybody.jpg&imgrefurl=http://gallery.geekitude.com/v/2008/socialMediaCamp2008/&usg=__Of1-TbyBYLodZlryD4b1L15goi8=&h=113&w=150&sz=6&hl=en&start=12&zoom=0&tbnid=SrlDKXf9S4004M:&tbnh=72&tbnw=96&ei=cBn3TY3sC8Lr0gHW--2oCw&prev=/search%3Fq%3Dthistle%2Bcafe%2Baustin%2Btexas%26um%3D1%26hl%3Den%26client%3Dsafari%26rls%3Den%26biw%3D1024%26bih%3D613%26tbm%3Disch&um=1&itbs=1&iact=hc&vpx=820&vpy=220&dur=19&hovh=72&hovw=96&tx=58&ty=54&page=2&ndsp=14&ved=1t:429,r:13,s:12&biw=1024&bih=613",
+              "shortCameFrom": "q=thistle+cafe+austin+texas ... p=14 ... /www.google.com/imgres?imgurl=http://gallery.geekitude.com/d/5346-2/P1010375Everybody.jpg"
+            },
+            "browser": new Browser({
+              "id": 327,
+              "name": "Safari",
+              "version": "5.0"
+            }),
+            "device": new Device({
+              "id": 605,
+              "operatingSystem": "MacOSX",
+              "resolution": "1024x768"
+            }),
+            "searchEngine": null
+          }),
+          "ipAddress": "70.244.202.70",
+          "combinedTerms": "14, thistle+cafe+austin+texas",
+          "location": "United States / Texas / Austin",
+          "pageUrl": "2008/socialMediaCamp2008/",
+          "pageTitle": "Social Media Camp, July 30, 2008, Austin, Texas",
+          "cameFrom": "q=thistle+cafe+austin+texas ... p=14 ... /www.google.com/imgres?imgurl=http://gallery.geekitude.com/d/5346-2/P1010375Everybody.jpg"
+        },
+        {
+          "visit": new Visit({
+            "id": "e74a86b7-f2f7-4fb6-833c-dddaabfbdc91",
+            //"visitDatetime": new Date("2011-06-14T03:20:16"),
+            "visitDatetime": "2011-06-14T03:19:56",
+            "numberOfTimes": 0,
+            "seTerm": "",
+            "logFileName": "c:\\Users\\Elze\\Documents\\MyProjects\\DataImport\\FileExamplesForImport\\forImport_StatCounter-Log-2721969_20110614.csv",
+            "visitType": "page view",
+            "ipAddress": {
+              "ipV4Address": "70.244.202.70",
+              "numberOfTimes": 1,
+              "postalCode": "",
+              "city": {
+                "id": 807,
+                "name": "Austin",
+                "region": {
+                  "id": 436,
+                  "name": "Texas",
+                  "country": {
+                    "id": 247,
+                    "name": "United States"
+                  }
+                }
+              },
+              "region": {
+                "id": 436,
+                "name": "Texas",
+                "country": {
+                  "id": 247,
+                  "name": "United States"
+                }
+              },
+              "country": {
+                "id": 247,
+                "name": "United States"
+              },
+              "isp": null,
+              "visitor": null,
+              //"ipAddressRelations": null
+            },
+            "extractedTerms": [],
+            "pageUrl": {
+              "url": "http://gallery.geekitude.com/v/2008/socialMediaCamp2008/P1010375Everybody.jpg.html",
+              "urlCompact": "2008/socialMediaCamp2008/P1010375Everybody.jpg.html"
+            },
+            "pageUrlVariation": null,
+            "pageTitle": {
+              "title": "P1010375 Everybody in the main room of Thistle Cafe",
+              "titleCompact": null,
+              "pageUrl": {
+                "url": "http://gallery.geekitude.com/v/2008/socialMediaCamp2008/P1010375Everybody.jpg.html",
+                "urlCompact": "2008/socialMediaCamp2008/P1010375Everybody.jpg.html"
+              }
+            },
+            "pageTitleVariation": null,
+            "cameFrom": {
+              "id": 1311,
+              "cameFrom": "http://gallery.geekitude.com/v/2008/socialMediaCamp2008/",
+              "shortCameFrom": null
+            },
+            "browser": new Browser({
+              "id": 327,
+              "name": "Safari",
+              "version": "5.0"
+            }),
+            "device": new Device({
+              "id": 605,
+              "operatingSystem": "MacOSX",
+              "resolution": "1024x768"
+            }),
+            "searchEngine": null
+          }),
+          "ipAddress": "70.244.202.70",
+          "combinedTerms": "",
+          "location": "United States / Texas / Austin",
+          "pageUrl": "2008/socialMediaCamp2008/P1010375Everybody.jpg.html",
+          "pageTitle": "P1010375 Everybody in the main room of Thistle Cafe",
+          "cameFrom": "http://gallery.geekitude.com/v/2008/socialMediaCamp2008/"
+        }
+      ]
+    });
+    spyOn(effects.visitSessionDataService, 'GetVisitSession').and.returnValue(of(visitSessionBlocks));
+ */
+  });
+
+  it('should be created', () => {
+    expect(effects).toBeTruthy();
+  });
+});
+
+ 
+ 
+COPY & PASTE html code for this report
+To link to this report from your website or blog, copy and paste this html code into your web page
+<a href='https://tools.tracemyip.org/search--city/austin-%21-texas'>Austin, Texas IP address report</a>
+Direct URL for the report
+This simple url can be used for refering to this report in emails and printed media
+https://tools.tracemyip.org/search--city/austin-%21-texas
+Austin, Texas IP Addresses | Records 1 to 50
+IP Address	ISP	Organization
+70.113.11.157	RR.COM	- - -
+23.229.101.102	America/Chicago	- - -
+70.113.11.125	RR.COM	- - -
+69.167.45.238	PARADISENETWORKS.NET	- - -
+23.229.101.126	America/Chicago	- - -
+70.113.11.39	RR.COM	- - -
+107.77.222.84	ATT.NET	- - -
+23.229.101.192	America/Chicago	- - -
+24.173.67.246	RR.COM	- - -
+70.113.11.131	RR.COM	- - -
+23.229.101.101	America/Chicago	- - -
+23.229.101.255	America/Chicago	- - -
+70.113.11.215	RR.COM	- - -
+23.229.101.59	America/Chicago	- - -
+24.173.67.222	RR.COM	- - -
+69.167.45.181	PARADISENETWORKS.NET	- - -
+69.167.45.1	PARADISENETWORKS.NET	- - -
+70.113.11.175	RR.COM	- - -
+23.229.101.197	America/Chicago	- - -
+107.77.222.110	ATT.NET	- - -
+69.167.45.89	PARADISENETWORKS.NET	- - -
+70.113.11.12	RR.COM	- - -
+70.113.11.119	RR.COM	- - -
+50.84.88.127	RR.COM	- - -
+69.167.45.140	PARADISENETWORKS.NET	- - -
+24.173.67.86	RR.COM	- - -
+107.77.222.221	ATT.NET	- - -
+23.229.101.167	America/Chicago	- - -
+107.77.222.49	ATT.NET	- - -
+69.167.45.225	PARADISENETWORKS.NET	- - -
+24.173.67.214	RR.COM	- - -
+70.113.11.87	RR.COM	- - -
+23.229.101.80	America/Chicago	- - -
+70.113.11.57	RR.COM	- - -
+107.77.222.248	ATT.NET	- - -
+24.173.67.107	RR.COM	- - -
+107.77.222.165	ATT.NET	- - -
+107.77.222.70	ATT.NET	- - -
+70.113.11.153	RR.COM	- - -
+107.77.222.74	ATT.NET	- - -
+23.229.101.61	America/Chicago	- - -
+23.229.101.148	America/Chicago	- - -
+69.167.45.145	PARADISENETWORKS.NET	- - -
+69.167.45.90	PARADISENETWORKS.NET	- - -
+70.113.11.121	RR.COM	- - -
+107.77.222.177	ATT.NET	- - -
+69.167.45.96	PARADISENETWORKS.NET	- - -
+70.113.11.38	RR.COM	- - -
+69.167.45.156	PARADISENETWORKS.NET	- - -
+23.229.101.111	America/Chicago	- - -
+Go To: 
+1
+    Results: 
+50
+  1 51 101 151 201 251 301 351 401 451 501 551 601 651 701 751 801 851 901 951 1001    
+Records 1 - 50 out of 15477  		
+Any information copied or otherwise reproduced from this website must have a proper attribution. If you have used any of the content displayed on TraceMyIP.org Tools, you agree to properly reference to the source of information by creating a direct link to https://tools.tracemyip.org/
+
+
+ 
+© 2021 TraceMyIP.org Tools. All Rights Reserved. TraceMyIP Tools® is a registered trademark of TraceMyIP, LLC.
+Use of TraceMyIP.org Tools constitutes acceptance of Terms of Service.
+
+ 
+ 
+COPY & PASTE html code for this report
+To link to this report from your website or blog, copy and paste this html code into your web page
+<a href='https://tools.tracemyip.org/search--city/austin-%21-texas:-v-:gTr=1001&gNr=50'>Austin, Texas IP address report</a>
+Direct URL for the report
+This simple url can be used for refering to this report in emails and printed media
+https://tools.tracemyip.org/search--city/austin-%21-texas:-v-:gTr=1001&gNr=50
+Austin, Texas IP Addresses | Records 1001 to 1050
+IP Address	ISP	Organization
+172.58.96.237		- - -
+24.242.66.164	RR.COM	- - -
+172.58.96.97	America/Chicago	- - -
+172.58.96.46	America/Chicago	- - -
+172.58.96.11	America/Chicago	- - -
+2600:1700:e940:35e0:e120:8b94:ce08:bc3c	America/Chicago	- - -
+24.242.66.199	RR.COM	- - -
+24.242.66.185	RR.COM	- - -
+24.242.66.170	RR.COM	- - -
+24.242.66.188	RR.COM	- - -
+24.242.66.167	RR.COM	- - -
+24.242.66.187	RR.COM	- - -
+2600:1700:e940:35e0:81e0:e16c:7a24:f361	America/Chicago	- - -
+24.242.66.215	RR.COM	- - -
+2600:1700:e940:35e0:40d2:c1fd:f9e1:4f92	America/Chicago	- - -
+172.58.96.184	America/Chicago	- - -
+24.242.66.132	RR.COM	- - -
+24.242.66.102	RR.COM	- - -
+72.177.81.250	SPECTRUM.COM	- - -
+24.242.66.207	RR.COM	- - -
+172.58.96.107	America/Chicago	- - -
+24.242.66.9	RR.COM	- - -
+24.242.66.107	RR.COM	- - -
+24.242.66.221	RR.COM	- - -
+24.242.66.127	RR.COM	- - -
+172.58.96.123	America/Chicago	- - -
+24.242.66.45	RR.COM	- - -
+172.58.96.29	America/Chicago	- - -
+24.242.66.233	RR.COM	- - -
+172.58.96.135	America/Chicago	- - -
+24.242.66.147	RR.COM	- - -
+24.242.66.226	RR.COM	- - -
+24.242.66.49	RR.COM	- - -
+24.242.66.252	RR.COM	- - -
+24.242.66.78	RR.COM	- - -
+24.242.66.22	RR.COM	- - -
+136.49.182.204	GOOGLEFIBER.NET	- - -
+24.242.66.1	RR.COM	- - -
+209.99.52.83	DATAFOUNDRY.COM	- - -
+2600:100c:b044:99fe:90fd:645e:2653:e646	America/Chicago	- - -
+2600:1700:1b1:4890:15b3:834a:293a:b361	America/Chicago	- - -
+24.242.66.143	RR.COM	- - -
+172.58.96.10	America/Chicago	- - -
+172.58.96.243	America/Chicago	- - -
+24.242.66.72	RR.COM	- - -
+24.242.66.205	RR.COM	- - -
+172.58.96.249	America/Chicago	- - -
+172.58.99.35	America/Chicago	- - -
+172.58.99.138	America/Chicago	- - -
+2607:fb90:e628:fe79:1c7:4b92:c10a:360d	America/Chicago	- - -
+Go To: 
+1001
+    Results: 
+50
+  501 551 601 651 701 751 801 851 901 951 1001 1051 1101 1151 1201 1251 1301 1351 1401 1451 1501    
+Records 1001 - 1050 out of 15478  	
+Any information copied or otherwise reproduced from this website must have a proper attribution. If you have used any of the content displayed on TraceMyIP.org Tools, you agree to properly reference to the source of information by creating a direct link to https://tools.tracemyip.org/
+
+
+ 
+© 2021 TraceMyIP.org Tools. All Rights Reserved. TraceMyIP Tools® is a registered trademark of TraceMyIP, LLC.
+Use of TraceMyIP.org Tools constitutes acceptance of Terms of Service.
